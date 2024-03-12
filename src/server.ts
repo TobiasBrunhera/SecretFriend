@@ -4,6 +4,7 @@ import cors from 'cors'
 import hhtps from 'https'
 import http from 'http'
 import siteRoutes from './routes/site'
+import adminRoutes from './routes/admin'
 import { requestIntercepter } from './utils/requestintercepter'
 
 const app = express()
@@ -14,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.all('*', requestIntercepter)
 
-// app.use('/', adminRoutes)
+app.use('/admin', adminRoutes)
 app.use('/', siteRoutes)
 
 const runServer = (port: number, server: http.Server) => {
@@ -24,7 +25,7 @@ const runServer = (port: number, server: http.Server) => {
 }
 
 const regularServer = http.createServer(app)
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
     // TODO: Configurar SSL
     // TODO: Rodar server na 80 e na 443
 } else {
