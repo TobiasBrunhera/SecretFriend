@@ -7,3 +7,9 @@ export const getAll = async () => {
         return await prisma.event.findMany()
     } catch (err) { return false }
 }
+
+export const getOne = async (id: number) => {
+    try {
+        return await prisma.event.findFirst({ where: { id: id } })
+    } catch (err) { return false }
+}

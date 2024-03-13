@@ -9,5 +9,6 @@ router.get('/ping', auth.validate, (req, res) => res.json({ pong: true, admin: t
 router.post('/login', auth.login)
 
 router.get('/events', auth.validate, events.getAll)
+router.get('/events/:id', auth.validate, events.getEvent)
 
 export default router
