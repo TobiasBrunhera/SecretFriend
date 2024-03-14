@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 import * as events from '../services/events'
 import { z } from 'zod'
 import { exitCode } from "process";
+import exp from "constants";
+import { error } from "console";
 
 export const getAll: RequestHandler = async (req, res) => {
     const items = await events.getAll()
@@ -68,5 +70,18 @@ export const updateEvent: RequestHandler = async (req, res) => {
     }
 
     res.json({ error: 'Ocorreu um erro!' })
+
+}
+
+export const deleteEvent: RequestHandler = async (req, res) => {
+    const { id } = req.params
+
+    const deletedEvent = await events.remove(parseInt(id))
+
+    if (deletedEvent) return res.json({ event: deletedEvent })
+
+    res.json({ error: 'Ocorreu um erro!' })
+
+    console.log({ error })
 
 }
