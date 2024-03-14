@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import * as events from '../services/events'
 import { z } from 'zod'
-import { json } from "stream/consumers";
+import { exitCode } from "process";
 
 export const getAll: RequestHandler = async (req, res) => {
     const items = await events.getAll()
@@ -38,4 +38,35 @@ export const addEvent: RequestHandler = async (req, res) => {
     if (newEvent) return res.status(201).json({ evnet: newEvent })
 
     res.json({ error: 'Ocorreu um erro!' })
+}
+
+export const updateEvent: RequestHandler = async (req, res) => {
+    const { id } = req.params
+    const updateEventSchema = z.object({
+        status: z.boolean().optional(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        grouped: z.boolean().optional()
+    })
+
+    const body = updateEventSchema.safeParse(req.body)
+
+    if (!body.success) {
+        return res.json({ error: 'Dados inválidos!' })
+    }
+
+    const updatedEvent = await events.update(parseInt(id), body.data)
+
+    if (updatedEvent) {
+        if (updatedEvent.status) {
+            // TODO: Fazer o sorteio
+        } else {
+            // TODO: Limpar o sorteio
+        }
+
+        return res.json({ event: updatedEvent })
+    }
+
+    res.json({ error: 'Ocorreu um erro!' })
+
 }
