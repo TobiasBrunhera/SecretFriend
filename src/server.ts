@@ -1,7 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
-import hhtps from 'https'
 import http from 'http'
 import siteRoutes from './routes/site'
 import adminRoutes from './routes/admin'
