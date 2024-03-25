@@ -16,7 +16,6 @@ export const getOne = async (filters: GetOneFilters) => {
     } catch (error) { return false }
 }
 
-
 type GroupsCreateData = Prisma.Args<typeof prisma.eventGroup, 'create'>['data']
 export const add = async (data: GroupsCreateData) => {
     try {

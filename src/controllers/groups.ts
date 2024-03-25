@@ -30,7 +30,7 @@ export const addGroup: RequestHandler = async (req, res) => {
     const { id_event } = req.params
 
     const addGroupSchema = z.object({
-        name: z.string(),
+        name: z.string()
     })
 
     const body = addGroupSchema.safeParse(req.body)
