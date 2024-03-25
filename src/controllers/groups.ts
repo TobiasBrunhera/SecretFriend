@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import * as groups from '../services/groups'
 import { z } from 'zod'
+import { group } from "console";
 
 export const getAll: RequestHandler = async (req, res) => {
     const { id_event } = req.params
@@ -43,6 +44,40 @@ export const addGroup: RequestHandler = async (req, res) => {
     })
 
     if (newGroup) return res.status(201).json({ group: newGroup })
+
+    res.json({ error: 'Ocorreu um erro!' })
+}
+
+export const updateGroup: RequestHandler = async (req, res) => {
+    const { id, id_event } = req.params
+
+    const updateGroupSchema = z.object({
+        name: z.string().optional()
+    })
+
+    const body = updateGroupSchema.safeParse(req.body)
+
+    if (!body.success) return res.json({ error: 'Dados inválidos!' })
+
+    const updatedGroup = await groups.update({
+        id: parseInt(id),
+        id_event: parseInt(id_event)
+    }, body.data)
+
+    if (updatedGroup) return res.json({ group: updatedGroup })
+
+    res.json({ error: 'Ocorreu um erro!' })
+}
+
+export const deleteGroup: RequestHandler = async (req, res) => {
+    const { id, id_event } = req.params
+
+    const deletedGroup = await groups.remove({
+        id: parseInt(id),
+        id_event: parseInt(id_event)
+    })
+
+    if (deletedGroup) return res.json({ group: deletedGroup })
 
     res.json({ error: 'Ocorreu um erro!' })
 }

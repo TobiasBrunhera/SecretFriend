@@ -13,7 +13,7 @@ type GetOneFilters = { id: number, id_event?: number }
 export const getOne = async (filters: GetOneFilters) => {
     try {
         return await prisma.eventGroup.findFirst({ where: filters })
-    } catch (error) { return false }
+    } catch (err) { return false }
 }
 
 type GroupsCreateData = Prisma.Args<typeof prisma.eventGroup, 'create'>['data']
@@ -25,5 +25,20 @@ export const add = async (data: GroupsCreateData) => {
         if (!eventItem) return false
 
         return await prisma.eventGroup.create({ data })
-    } catch (error) { return false }
+    } catch (err) { return false }
+}
+
+type updateFilters = { id: number, id_event?: number }
+type GroupsUpdateData = Prisma.Args<typeof prisma.eventGroup, 'update'>['data']
+export const update = async (filters: updateFilters, data: GroupsUpdateData) => {
+    try {
+        return await prisma.eventGroup.update({ where: filters, data })
+    } catch (err) { return false }
+}
+
+type DeleteFilters = { id: number, id_event?: number }
+export const remove = async (filters: DeleteFilters) => {
+    try {
+        return await prisma.eventGroup.delete({ where: filters })
+    } catch (err) { return false }
 }
