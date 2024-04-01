@@ -96,3 +96,7 @@ export const deletePerson: RequestHandler = async (req, res) => {
 
     res.json({ error: 'Ocorreu um erro!' })
 }
+
+export const searchPeople: RequestHandler = async (req, res) => {
+    const { id_event } = req.params
+}

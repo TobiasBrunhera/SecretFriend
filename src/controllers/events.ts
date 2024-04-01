@@ -16,9 +16,7 @@ export const getEvent: RequestHandler = async (req, res) => {
 
     const eventItem = await events.getOne(parseInt(id))
 
-    if (eventItem) {
-        return res.json({ event: eventItem })
-    }
+    if (eventItem) return res.json({ event: eventItem })
 
     res.json({ error: 'Ocorreu um erro!' })
 }
